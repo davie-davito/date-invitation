@@ -28,6 +28,9 @@
 
   let currentStep = 0;
   let noDodgeCount = 0;
+  let lastProximityDodge = 0;
+  const PROXIMITY_MARGIN = 58;
+  const PROXIMITY_COOLDOWN_MS = 130;
   const teaseMessages = [
     "Are you sure? 🥺",
     "Really really sure?",
@@ -69,6 +72,32 @@
     }
   }
 
+  function isNearNoButton(clientX, clientY) {
+    const rect = btnNo.getBoundingClientRect();
+    return (
+      clientX >= rect.left - PROXIMITY_MARGIN &&
+      clientX <= rect.right + PROXIMITY_MARGIN &&
+      clientY >= rect.top - PROXIMITY_MARGIN &&
+      clientY <= rect.bottom + PROXIMITY_MARGIN
+    );
+  }
+
+  function checkProximityDodge(clientX, clientY) {
+    const now = Date.now();
+    if (now - lastProximityDodge < PROXIMITY_COOLDOWN_MS) return;
+    if (!isNearNoButton(clientX, clientY)) return;
+    lastProximityDodge = now;
+    moveNoButton();
+  }
+
+  function handleTouchProximity(e) {
+    if (!screenAsk.classList.contains("active")) return;
+    for (let i = 0; i < e.touches.length; i++) {
+      const touch = e.touches[i];
+      checkProximityDodge(touch.clientX, touch.clientY);
+    }
+  }
+
   function initNoButton() {
     btnNo.style.position = "absolute";
     const yesRect = btnYes.getBoundingClientRect();
@@ -76,7 +105,13 @@
     btnNo.style.left = `${yesRect.right - areaRect.left + 16}px`;
     btnNo.style.top = `${(areaRect.height - btnNo.offsetHeight) / 2}px`;
 
+    // Desktop: dodge on hover
     btnNo.addEventListener("mouseenter", moveNoButton);
+
+    // Mobile: dodge when finger gets close (before/at tap)
+    screenAsk.addEventListener("touchstart", handleTouchProximity, { passive: true });
+    screenAsk.addEventListener("touchmove", handleTouchProximity, { passive: true });
+
     btnNo.addEventListener("touchstart", (e) => {
       e.preventDefault();
       moveNoButton();
