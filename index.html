@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A sweet invitation for Queen">
+  <title>For Queen 💌</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Dancing+Script:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="haze"></div>
+  </div>
+
+  <div class="petals" aria-hidden="true">
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+  </div>
+
+  <main class="app">
+    <!-- Screen 1: Ask -->
+    <section id="screen-ask" class="screen active" aria-label="Date invitation">
+      <div class="card glass">
+        <div class="card-icon" aria-hidden="true">💌</div>
+        <p class="eyebrow">An invitation</p>
+        <h1>Would you go on a date with me?</h1>
+        <p class="subtitle">Hey Queen, I've been thinking about this for a while…</p>
+        <p id="tease-text" class="tease-text hidden" aria-live="polite">Are you sure? 🥺</p>
+        <div id="button-area" class="button-area">
+          <button type="button" id="btn-yes" class="btn btn-yes">Yes, I'd love to</button>
+          <button type="button" id="btn-no" class="btn btn-no">No</button>
+        </div>
+        <p class="signature">— with all my heart</p>
+      </div>
+    </section>
+
+    <!-- Screen 2–5: Wizard -->
+    <section id="screen-wizard" class="screen" aria-label="Plan your date" hidden>
+      <div class="card glass wizard-card">
+        <div class="progress-dots" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1">
+          <span class="dot active" data-step="0"></span>
+          <span class="dot" data-step="1"></span>
+          <span class="dot" data-step="2"></span>
+          <span class="dot" data-step="3"></span>
+        </div>
+
+        <!-- Step 1: Date vibe -->
+        <div class="wizard-step active" data-step="0">
+          <h2>What kind of date sounds perfect?</h2>
+          <p class="step-hint">Pick the vibe that feels right</p>
+          <div class="option-grid" role="radiogroup" aria-label="Date type">
+            <label class="option-card">
+              <input type="radio" name="dateVibe" value="Coffee & chat">
+              <span class="option-icon">☕</span>
+              <span class="option-label">Coffee & chat</span>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="dateVibe" value="Dinner">
+              <span class="option-icon">🍽️</span>
+              <span class="option-label">Dinner</span>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="dateVibe" value="Movie night">
+              <span class="option-icon">🎬</span>
+              <span class="option-label">Movie night</span>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="dateVibe" value="Walk in the park">
+              <span class="option-icon">🌳</span>
+              <span class="option-label">Walk in the park</span>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="dateVibe" value="Adventure / something fun">
+              <span class="option-icon">🎢</span>
+              <span class="option-label">Adventure / something fun</span>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="dateVibe" value="Surprise me — you pick">
+              <span class="option-icon">✨</span>
+              <span class="option-label">Surprise me — you pick</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 2: Location -->
+        <div class="wizard-step" data-step="1" hidden>
+          <h2>Where should we go?</h2>
+          <p class="step-hint">Let's figure out the perfect spot</p>
+          <div class="option-list" role="radiogroup" aria-label="Location preference">
+            <label class="option-row">
+              <input type="radio" name="location" value="You choose the place">
+              <span class="option-row-text">
+                <strong>You choose the place</strong>
+                <small>I'll follow your lead</small>
+              </span>
+            </label>
+            <label class="option-row">
+              <input type="radio" name="location" value="I have a place in mind">
+              <span class="option-row-text">
+                <strong>I have a place in mind</strong>
+                <small>I'll suggest somewhere special</small>
+              </span>
+            </label>
+            <label class="option-row">
+              <input type="radio" name="location" value="Let's decide together">
+              <span class="option-row-text">
+                <strong>Let's decide together</strong>
+                <small>We'll pick something we both love</small>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 3: Date & time -->
+        <div class="wizard-step" data-step="2" hidden>
+          <h2>When works for you?</h2>
+          <p class="step-hint">Pick a day and time that suits you</p>
+          <div class="form-fields">
+            <label class="field">
+              <span>Date</span>
+              <input type="date" id="date-picker" name="date" required>
+            </label>
+            <fieldset class="field time-slots">
+              <legend>Time of day</legend>
+              <div class="slot-grid">
+                <label class="slot-card">
+                  <input type="radio" name="timeSlot" value="Morning">
+                  <span>🌅 Morning</span>
+                </label>
+                <label class="slot-card">
+                  <input type="radio" name="timeSlot" value="Afternoon">
+                  <span>☀️ Afternoon</span>
+                </label>
+                <label class="slot-card">
+                  <input type="radio" name="timeSlot" value="Evening">
+                  <span>🌙 Evening</span>
+                </label>
+              </div>
+            </fieldset>
+            <label class="field">
+              <span>Specific time <small>(optional)</small></span>
+              <input type="time" id="time-picker" name="time">
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 4: Name & note -->
+        <div class="wizard-step" data-step="3" hidden>
+          <h2>Almost there!</h2>
+          <p class="step-hint">A few last details before we make it official</p>
+          <div class="form-fields">
+            <label class="field">
+              <span>What should I call you? <small>(optional)</small></span>
+              <input type="text" id="name-input" name="name" placeholder="Your name" maxlength="50" autocomplete="name">
+            </label>
+            <label class="field">
+              <span>Anything else you'd like to add? <small>(optional)</small></span>
+              <textarea id="note-input" name="note" rows="3" placeholder="Dietary preferences, favorite spot, a sweet message…" maxlength="300"></textarea>
+            </label>
+          </div>
+        </div>
+
+        <p id="form-error" class="form-error hidden" role="alert"></p>
+
+        <div class="wizard-nav">
+          <button type="button" id="btn-back" class="btn btn-ghost" hidden>Back</button>
+          <button type="button" id="btn-next" class="btn btn-yes">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen 6: Success -->
+    <section id="screen-success" class="screen" aria-label="Success" hidden>
+      <div class="card glass success-card">
+        <div class="success-icon" aria-hidden="true">💛</div>
+        <h2>Can't wait to see you!</h2>
+        <p class="subtitle">Your answer made my whole week, Queen.</p>
+        <div id="summary" class="summary"></div>
+        <p class="signature signature-end">See you soon, gorgeous ✨</p>
+      </div>
+    </section>
+  </main>
+
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
