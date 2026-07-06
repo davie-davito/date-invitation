@@ -28,9 +28,14 @@
 
   let currentStep = 0;
   let noDodgeCount = 0;
+  let teaseIndex = -1;
+  let lastTeaseAdvance = 0;
   let lastProximityDodge = 0;
-  const PROXIMITY_MARGIN = 58;
-  const PROXIMITY_COOLDOWN_MS = 130;
+  let ignoreNoClick = false;
+  const isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const PROXIMITY_MARGIN = isFinePointer ? 58 : 80;
+  const PROXIMITY_COOLDOWN_MS = isFinePointer ? 130 : 200;
+  const TEASE_ADVANCE_MS = 400;
   const teaseMessages = [
     "Are you sure? 🥺",
     "Really  sure?",
@@ -45,32 +50,63 @@
     from.classList.remove("active");
     from.hidden = true;
     to.hidden = false;
-    requestAnimationFrame(() => to.classList.add("active"));
+    requestAnimationFrame(() => {
+      to.classList.add("active");
+      scrollActiveContentIntoView();
+    });
   }
 
   // --- Runaway No button ---
+  function advanceTeaseMessage() {
+    const now = Date.now();
+    if (now - lastTeaseAdvance < TEASE_ADVANCE_MS) return;
+    if (teaseIndex >= teaseMessages.length - 1) return;
+
+    lastTeaseAdvance = now;
+    teaseIndex++;
+    teaseText.classList.remove("hidden");
+    teaseText.textContent = teaseMessages[teaseIndex];
+  }
+
   function moveNoButton() {
     const area = buttonArea.getBoundingClientRect();
-    const btn = btnNo.getBoundingClientRect();
+    const btnW = btnNo.offsetWidth;
+    const btnH = btnNo.offsetHeight;
     const padding = 8;
-    const maxX = area.width - btn.width - padding;
-    const maxY = area.height - btn.height - padding;
+    const maxX = Math.max(0, area.width - btnW - padding);
+    const maxY = Math.max(0, area.height - btnH - padding);
 
-    const x = Math.max(padding, Math.random() * maxX);
-    const y = Math.max(padding, Math.random() * maxY);
+    const x = maxX > 0 ? padding + Math.random() * maxX : padding;
+    const y = maxY > 0 ? padding + Math.random() * maxY : padding;
 
     btnNo.style.left = `${x}px`;
     btnNo.style.top = `${y}px`;
 
     noDodgeCount++;
-    if (noDodgeCount >= 1) {
-      teaseText.classList.remove("hidden");
-      const msgIndex = Math.min(noDodgeCount - 1, teaseMessages.length - 1);
-      teaseText.textContent = teaseMessages[msgIndex];
-    }
+    advanceTeaseMessage();
     if (noDodgeCount >= 7) {
       btnNo.classList.add("shrinking");
     }
+  }
+
+  function resetNoButtonPosition() {
+    if (!screenAsk.classList.contains("active")) return;
+    btnNo.classList.remove("shrinking");
+    btnNo.style.position = "absolute";
+    const yesRect = btnYes.getBoundingClientRect();
+    const areaRect = buttonArea.getBoundingClientRect();
+    const startLeft = yesRect.right - areaRect.left + 16;
+    const maxLeft = Math.max(8, areaRect.width - btnNo.offsetWidth - 8);
+    btnNo.style.left = `${Math.min(startLeft, maxLeft)}px`;
+    btnNo.style.top = `${Math.max(8, (areaRect.height - btnNo.offsetHeight) / 2)}px`;
+  }
+
+  function scrollActiveContentIntoView() {
+    const activeCard = document.querySelector(".screen.active .card");
+    if (!activeCard) return;
+    requestAnimationFrame(() => {
+      activeCard.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   }
 
   function isNearNoButton(clientX, clientY) {
@@ -100,27 +136,34 @@
   }
 
   function initNoButton() {
-    btnNo.style.position = "absolute";
-    const yesRect = btnYes.getBoundingClientRect();
-    const areaRect = buttonArea.getBoundingClientRect();
-    btnNo.style.left = `${yesRect.right - areaRect.left + 16}px`;
-    btnNo.style.top = `${(areaRect.height - btnNo.offsetHeight) / 2}px`;
+    resetNoButtonPosition();
 
-    // Desktop: dodge on hover
-    btnNo.addEventListener("mouseenter", moveNoButton);
+    // Desktop only — phones use touch proximity + tap
+    if (isFinePointer) {
+      btnNo.addEventListener("mouseenter", moveNoButton);
+    }
 
-    // Mobile: dodge when finger gets close (before/at tap)
     screenAsk.addEventListener("touchstart", handleTouchProximity, { passive: true });
     screenAsk.addEventListener("touchmove", handleTouchProximity, { passive: true });
 
     btnNo.addEventListener("touchstart", (e) => {
       e.preventDefault();
+      ignoreNoClick = true;
       moveNoButton();
+      setTimeout(() => {
+        ignoreNoClick = false;
+      }, TEASE_ADVANCE_MS);
     }, { passive: false });
 
     btnNo.addEventListener("click", (e) => {
       e.preventDefault();
+      if (ignoreNoClick || isFinePointer) return;
       moveNoButton();
+    });
+
+    window.addEventListener("resize", resetNoButtonPosition);
+    window.addEventListener("orientationchange", () => {
+      setTimeout(resetNoButtonPosition, 150);
     });
   }
 
@@ -145,6 +188,7 @@
 
     btnBack.hidden = currentStep === 0;
     btnNext.textContent = currentStep === wizardSteps.length - 1 ? "Seal the date" : "Next";
+    scrollActiveContentIntoView();
   }
 
   function getSelectedRadio(name) {
@@ -327,6 +371,15 @@
           }
         }, 350);
       }
+    });
+  });
+
+  // Keep inputs visible when mobile keyboard opens
+  document.querySelectorAll(".field input, .field textarea").forEach((el) => {
+    el.addEventListener("focus", () => {
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 300);
     });
   });
 
