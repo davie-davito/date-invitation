@@ -33,9 +33,10 @@
   const PROXIMITY_COOLDOWN_MS = 130;
   const teaseMessages = [
     "Are you sure? 🥺",
-    "Really really sure?",
+    "Really  sure?",
     "The Yes button is right there…",
     "I'll make it worth your while 💕",
+    "you will never regret it sweetie ",
     "Pretty please?",
   ];
 
@@ -62,12 +63,12 @@
     btnNo.style.top = `${y}px`;
 
     noDodgeCount++;
-    if (noDodgeCount >= 3) {
+    if (noDodgeCount >= 1) {
       teaseText.classList.remove("hidden");
-      const msgIndex = Math.min(noDodgeCount - 3, teaseMessages.length - 1);
+      const msgIndex = Math.min(noDodgeCount - 1, teaseMessages.length - 1);
       teaseText.textContent = teaseMessages[msgIndex];
     }
-    if (noDodgeCount >= 6) {
+    if (noDodgeCount >= 7) {
       btnNo.classList.add("shrinking");
     }
   }
