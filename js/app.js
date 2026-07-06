@@ -144,7 +144,7 @@
     });
 
     btnBack.hidden = currentStep === 0;
-    btnNext.textContent = currentStep === wizardSteps.length - 1 ? "Send my answer 💌" : "Next";
+    btnNext.textContent = currentStep === wizardSteps.length - 1 ? "Seal the date" : "Next";
   }
 
   function getSelectedRadio(name) {
@@ -292,7 +292,7 @@
     } finally {
       btnNext.disabled = false;
       btnNext.textContent =
-        currentStep === wizardSteps.length - 1 ? "Send my answer 💌" : "Next";
+        currentStep === wizardSteps.length - 1 ? "Seal the date" : "Next";
     }
   }
 
