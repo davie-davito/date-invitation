@@ -44,15 +44,12 @@ html {
 
 body {
   min-height: 100dvh;
-  min-height: 100svh;
   font-family: var(--font-body);
   color: var(--text);
   background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 38%, var(--sky-low) 72%, var(--sky-deep) 100%);
   overflow-x: hidden;
   line-height: 1.55;
   position: relative;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
 }
 
 /* Sunset sky layers */
@@ -155,11 +152,10 @@ body {
   position: relative;
   z-index: 2;
   min-height: 100dvh;
-  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  padding: 1.5rem;
 }
 
 .screen {
@@ -332,13 +328,9 @@ h2 {
   font-weight: 600;
   letter-spacing: 0.3px;
   padding: 0.95rem 2.1rem;
-  min-height: 48px;
   border-radius: 999px;
   border: none;
   cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
   transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, filter 0.25s ease;
   white-space: nowrap;
 }
@@ -383,13 +375,6 @@ h2 {
 .btn-yes:hover {
   transform: translateY(-3px) scale(1.03);
   box-shadow: 0 20px 46px rgba(255, 110, 120, 0.6), 0 0 34px rgba(247, 185, 85, 0.5);
-}
-
-@media (hover: none) {
-  .btn-yes:hover {
-    transform: none;
-    box-shadow: 0 14px 32px rgba(255, 110, 120, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
-  }
 }
 
 .btn-no {
@@ -496,31 +481,20 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 0.45rem;
-  min-height: 52px;
-  padding: 1.2rem 0.75rem;
+  padding: 1.2rem 0.6rem;
   border-radius: 18px;
   border: 1px solid rgba(255, 122, 107, 0.18);
   background: rgba(255, 255, 255, 0.55);
   cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
   transition: border-color 0.25s, background 0.25s, transform 0.25s, box-shadow 0.25s;
 }
 
-@media (hover: hover) {
-  .option-card:hover {
-    background: rgba(255, 255, 255, 0.94);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 26px rgba(214, 51, 108, 0.16);
-    border-color: rgba(255, 122, 107, 0.45);
-  }
-}
-
-.option-card:active {
-  transform: scale(0.98);
+.option-card:hover {
   background: rgba(255, 255, 255, 0.94);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(214, 51, 108, 0.16);
+  border-color: rgba(255, 122, 107, 0.45);
 }
 
 .option-card input {
@@ -558,33 +532,24 @@ h2 {
   display: flex;
   align-items: flex-start;
   gap: 0.85rem;
-  min-height: 52px;
-  padding: 1.1rem 1.15rem;
+  padding: 1.05rem 1.15rem;
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.55);
   border: 1px solid rgba(255, 122, 107, 0.18);
   cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
   transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
 }
 
-@media (hover: hover) {
-  .option-row:hover {
-    background: rgba(255, 255, 255, 0.94);
-    border-color: rgba(255, 122, 107, 0.4);
-  }
-}
-
-.option-row:active {
+.option-row:hover {
   background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(255, 122, 107, 0.4);
 }
 
 .option-row input {
-  margin-top: 0.15rem;
+  margin-top: 0.2rem;
   accent-color: var(--coral);
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
 }
 
@@ -634,14 +599,12 @@ h2 {
 .field input,
 .field textarea {
   font-family: var(--font-body);
-  font-size: 16px;
-  padding: 0.85rem 1rem;
-  min-height: 48px;
+  font-size: 1rem;
+  padding: 0.8rem 1rem;
   border-radius: 14px;
   border: 1px solid rgba(255, 122, 107, 0.28);
   background: rgba(255, 255, 255, 0.82);
   color: var(--text);
-  width: 100%;
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
@@ -685,18 +648,15 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  padding: 0.85rem 0.5rem;
+  padding: 0.8rem 0.25rem;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.55);
   border: 1px solid rgba(255, 122, 107, 0.18);
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   font-weight: 500;
   text-align: center;
   color: var(--text);
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
   transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
 
@@ -705,13 +665,7 @@ h2 {
   opacity: 0;
 }
 
-@media (hover: hover) {
-  .slot-card:hover {
-    background: rgba(255, 255, 255, 0.94);
-  }
-}
-
-.slot-card:active {
+.slot-card:hover {
   background: rgba(255, 255, 255, 0.94);
 }
 
@@ -827,101 +781,29 @@ h2 {
   z-index: 100;
 }
 
-/* Responsive — phone-first */
-@media (max-width: 768px) {
-  .app {
-    align-items: flex-start;
-    padding-top: max(1.25rem, env(safe-area-inset-top));
-    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
-  }
-
-  .card {
-    padding: 1.5rem 1.25rem;
-  }
-
-  .button-area {
-    flex-direction: column;
-    gap: 0.75rem;
-    min-height: 11rem;
-    width: 100%;
-    margin-top: 0.75rem;
-  }
-
-  #btn-yes {
-    width: 100%;
-    max-width: 280px;
-  }
-
-  .btn-no {
-    position: absolute !important;
-    min-width: 88px;
-  }
-
+/* Responsive */
+@media (max-width: 400px) {
   .option-grid {
     grid-template-columns: 1fr;
-    gap: 0.65rem;
-  }
-
-  .option-label {
-    font-size: 0.95rem;
   }
 
   .slot-grid {
     grid-template-columns: 1fr;
-    gap: 0.5rem;
   }
 
-  .wizard-nav {
-    flex-direction: column-reverse;
-    gap: 0.65rem;
+  .button-area {
+    flex-direction: column;
+    min-height: 120px;
   }
 
-  .wizard-nav .btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .wizard-nav .btn-yes {
-    margin-left: 0;
-  }
-
-  .summary dl {
-    grid-template-columns: 1fr;
-    gap: 0.2rem 0;
-  }
-
-  .summary dt {
-    margin-top: 0.65rem;
-  }
-
-  .summary dt:first-child {
-    margin-top: 0;
-  }
-
-  .summary dd {
-    padding-bottom: 0.35rem;
-    border-bottom: 1px solid rgba(255, 140, 150, 0.15);
-  }
-
-  .summary dd:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-}
-
-@media (max-width: 400px) {
-  h1 {
-    font-size: clamp(1.65rem, 7vw, 2rem);
-  }
-
-  .eyebrow {
-    letter-spacing: 3px;
+  .btn-no {
+    position: absolute !important;
   }
 }
 
 @media (max-width: 340px) {
   .btn {
-    padding: 0.85rem 1.4rem;
+    padding: 0.8rem 1.6rem;
     font-size: 0.95rem;
   }
 }
